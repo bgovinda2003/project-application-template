@@ -50,8 +50,7 @@ config.overwrite_from_args(args)
 if args.feature == 0:
     ExampleAnalysis().run()
 elif args.feature == 1:
-    loader = DataLoader()
-    issues = loader.get_issues()
+    issues = DataLoader().get_issues()
     run_label_analysis(issues,label=args.label)
 elif args.feature == 2:
     pass # TODO call second analysis

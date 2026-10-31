@@ -38,8 +38,20 @@ def is_issue(issue):
 
 
 def resolution_days(issue):
-    created = timestamp(field(issue, 'created_at'))
+    """Days from creation to the final recorded closure event."""
+    created = timestamp(field(issue, 'created_date') or field(issue, 'created_at'))
     closed = timestamp(field(issue, 'closed_at'))
+    if closed is None:
+        state = field(issue, 'state', '')
+        if str(getattr(state, 'value', state)).lower() != 'closed':
+            return None
+        closure_dates = [
+            timestamp(field(event, 'event_date'))
+            for event in (field(issue, 'events', []) or [])
+            if field(event, 'event_type') == 'closed'
+        ]
+        closure_dates = [date for date in closure_dates if date is not None]
+        closed = max(closure_dates, default=None)
     if created is None or closed is None or closed < created:
         return None
     return (closed - created).total_seconds() / 86400
