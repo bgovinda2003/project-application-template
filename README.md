@@ -191,9 +191,9 @@ Stage only files that exist and belong to your change. Do not commit `.venv/`, c
 
 | Feature | Contribution | Team Member |
 |---|---|---|
-| Feature 1 | Label Resolution Time Analysis | John Doe |
-| Feature 2 | Contributors Dashboard | Jone Doe |
-| Feature 3 | Priority & Complexity Prediction | XXXX YYYY |
+| Feature 1 | Label Resolution Time Analysis | Bala Govindaraju |
+| Feature 2 | Contributors Dashboard |  |
+| Feature 3 | Priority & Complexity Prediction |  |
 
 *Replace the example names with the actual team members before submission. Confirm the feature descriptions and example output with the team before submission.*
 
