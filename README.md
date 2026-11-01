@@ -110,8 +110,7 @@ Figure 1: Comparison of median resolution times across GitHub issue labels.
 
 ![Labe Resolution Time Chart](images/label_resolution_chart.png)
 
-Note: These results are from the previously analyzed dataset. The chart should be generated using the current application before submission.
-
+Note: These results are from the previously analyzed dataset. 
 
 ### Feature 2 — Discussion Intensity vs. Resolution Time
 
