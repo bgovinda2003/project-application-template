@@ -108,7 +108,7 @@ Resolution Time Visualization
 
 Figure 1: Comparison of median resolution times across GitHub issue labels.
 
-![Labe Resolution Time Chart](images/label_resolution_chart.org)
+![Labe Resolution Time Chart](images/label_resolution_chart.png)
 
 Note: These results are from the previously analyzed dataset. The chart should be generated using the current application before submission.
 
@@ -162,6 +162,8 @@ project-root/
 ├── poetry_issues.json             # Local dataset; usually not committed
 └── tests/
     └── test_label_resolution_analysis.py
+└── images/
+    └── label_resolution_chart.png    
 ```
 
 Additional Feature 2/3 modules and tests should be added to this structure when merged. This tree shows the confirmed Feature 1 files, not a complete inventory of the team's final repository.
