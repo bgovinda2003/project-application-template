@@ -90,6 +90,7 @@ python run.py --feature 1
 **Interpretation:** Median resolution time describes a typical closed issue, while the mean can be affected by unusually long-lived issues. Time to closure does not necessarily equal time to a confirmed fix. An issue with multiple labels can contribute to multiple label groups. Issues without usable closure timestamps are excluded.
 
 Feature 1: Label Resolution Time Analysis — Sample Results
+
 This feature analyzes how long GitHub issues take to resolve, grouped by issue labels. It calculates the average and median resolution times for closed issues.
 How to Run
 python run.py --feature 1 --label kind/bug
