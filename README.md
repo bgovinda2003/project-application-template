@@ -12,7 +12,7 @@ The team is developing three complementary analyses:
 | --- | --- | --- |
 | **1** | **Issue Resolution Time by Label** | Which issue categories take longer to close? |
 | **2** | **Contributors Dashboard** | What insights can be gathered about contributor activity? |
-| **3** | **Priority & Complexity Prediction** | How can issue priority and complexity be estimated? |
+| **3** | **Discussion Trend Analysis** | How does GitHub issue discussion activity change over time? |
 
 The analyses are intended to produce interpretable findings, not just raw counts. Feature 1 supports a user-supplied label and displays summary statistics and a matplotlib chart. Features 2 and 3 are team workstreams; verify their implementation and output before describing them as complete.
 
