@@ -47,5 +47,11 @@ def run(issues, label=None, show_chart=True):
         ax.set(title='Median Issue Resolution Time by Label', xlabel='Issue label', ylabel='Median days to close')
         ax.tick_params(axis='x', labelrotation=35)
         fig.tight_layout()
+        plt.tight_layout()
+        plt.savefig(    
+            "images/label_resolution_chart.png",    
+            dpi=150,    
+            bbox_inches="tight"
+        )
         plt.show()
     return result
