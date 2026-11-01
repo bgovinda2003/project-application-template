@@ -89,6 +89,18 @@ python run.py --feature 1
 
 **Interpretation:** Median resolution time describes a typical closed issue, while the mean can be affected by unusually long-lived issues. Time to closure does not necessarily equal time to a confirmed fix. An issue with multiple labels can contribute to multiple label groups. Issues without usable closure timestamps are excluded.
 
+## Run the analyses
+
+### Feature 1 — Issue Resolution Time by Label
+
+[Execution commands]
+
+**Method:** The analysis loads issue objects...
+
+**Interpretation:** Median resolution time describes...
+
+### Feature 2 — Discussion Intensity vs. Resolution Time
+
 ### Feature 2 — Discussion Intensity vs. Resolution Time
 
 ```bash
@@ -195,7 +207,6 @@ Stage only files that exist and belong to your change. Do not commit `.venv/`, c
 | Feature 2 | Contributors Dashboard | Jael Andre |
 | Feature 3 | Priority & Complexity Prediction | Bhargav Nallamothu |
 
-*Replace the example names with the actual team members before submission. Confirm the feature descriptions and example output with the team before submission.*
 
 ## Feature 3: Priority & Complexity Prediction — Example Output and Use Cases
 
