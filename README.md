@@ -2,7 +2,7 @@
 
 **ENPM611 — Software Engineering Team Project**
 
-This project extends the ENPM611 Python application template to analyze issue activity in the [Poetry](https://github.com/python-poetry/poetry) open-source repository. It uses a prepared JSON dataset of GitHub issues and timeline events to explore issue resolution, contributor activity, and issue priority and complexity.
+This project extends the ENPM611 Python application template to analyze issue activity in the [Poetry](https://github.com/python-poetry/poetry) open-source repository. It uses a prepared JSON dataset of GitHub issues and timeline events to explore issue resolution, contributor activity, and discussion over time.
 
 ## Project goals
 
@@ -12,9 +12,9 @@ The team is developing three complementary analyses:
 | --- | --- | --- |
 | **1** | **Issue Resolution Time by Label** | Which issue categories take longer to close? |
 | **2** | **Contributors Dashboard** | What insights can be gathered about contributor activity? |
-| **3** | **Discussion Trend Analysis** | How does GitHub issue discussion activity change over time? |
+| **3** | **Discussion Trend** | Has discussion on issues grown, shrunk, or stayed flat over time? |
 
-The analyses are intended to produce interpretable findings, not just raw counts. Feature 1 supports a user-supplied label and displays summary statistics and a matplotlib chart. Features 2 and 3 are team workstreams; verify their implementation and output before describing them as complete.
+The analyses are intended to produce interpretable findings, not just raw counts. Feature 1 supports a user-supplied label and displays summary statistics and a matplotlib chart. Feature 3 groups issue openings and human comments by month and displays a chart. Feature 2 is still a team workstream; verify its implementation before describing it as complete.
 
 ## Requirements
 
@@ -27,43 +27,27 @@ The provided model uses `python-dateutil` to parse dates; the analysis charts us
 ## Setup
 
 1. Clone the **team's fork** and open the project folder:
-
    ```bash
-   git clone <TEAM_REPOSITORY_URL>
-   cd <REPOSITORY_FOLDER>
+      git clone <TEAM_REPOSITORY_URL>
+      cd <REPOSITORY_FOLDER>
    ```
-
 2. Create and activate a virtual environment.
 
    **Windows PowerShell:**
 
-   ```powershell
-   py -m venv .venv
-   .\.venv\Scripts\Activate.ps1
-   ```
-
-   **macOS / Linux:**
-
-   ```bash
-   python3 -m venv .venv
-   source .venv/bin/activate
-   ```
-
+      **macOS / Linux:**
 3. Install project dependencies:
-
    ```bash
-   python -m pip install -r requirements.txt
+      python -m pip install -r requirements.txt
    ```
-
 4. Place the prepared dataset in the repository root (or update the configuration to its actual path). Set `config.json` to:
-
    ```json
-   {
-     "ENPM611_PROJECT_DATA_PATH": "poetry_issues_all.json"
-   }
+      {
+        "ENPM611_PROJECT_DATA_PATH": "poetry_issues_all.json"
+      }
    ```
 
-   Only one dataset path is active at a time. To use `poetry_issues_all.json` instead, change the configuration value to that filename and ensure the file exists locally.
+      Only one dataset path is active at a time. To use `poetry_issues_all.json` instead, change the configuration value to that filename and ensure the file exists locally.
 
 > **Data note:** The JSON dataset is provided for the course. Do not commit the large dataset to Git unless the template or instructor explicitly requires it.
 
@@ -115,22 +99,30 @@ Note: These results are from the previously analyzed dataset.
 
 ### Feature 2 — Discussion Intensity vs. Resolution Time
 
-
 ```bash
 python run.py --feature 2
 ```
 
 **Planned purpose:** Explore whether issues with more discussion tend to have different resolution times. Confirm the exact metric, chart, and any supported arguments in the merged Feature 2 implementation.
 
-### Feature 3 — Monthly Issue Activity Trends
+### Feature 3 — Discussion Trend
 
 ```bash
 python run.py --feature 3
+python run.py --feature 3 --label kind/bug
 ```
 
-**Planned purpose:** Summarize and visualize changes in GitHub issue activity over time. Confirm the exact metrics, chart, and any supported arguments in the merged Feature 3 implementation.
+**Question:** Has discussion on Poetry issues grown, shrunk, or stayed flat over time?
 
-> Features 2 and 3 will run only after their implementations have been integrated into `run.py` and merged into the repository.
+**Method:** Issues are counted in the month of `created_date`. Human `commented` events are counted in the month of `event_date`. Bot accounts are ignored. `comments_per_issue` divides a month's human comments by the number of issues opened that month. A comment can belong to an older issue, so that ratio compares volume. It does not mean the comments were written on the issues opened that month. The optional `--label` argument limits both counts to issues carrying that label.
+
+**Output:** A comparison of the earlier half of the timeline with the later half, the five months with the most human comments, and a two-line chart of issues opened and human comments. 
+
+On `poetry_issues_all.json`, February 2018 through May 2021 had 2,686 issues opened and 3.89 human comments per issue opened. June 2021 through October 2024 had 2,887 issues opened and 4.77 human comments per issue opened. The busiest comment month was September 2022, with 920 human comments.
+
+Figure 3: Monthly issue openings and human comments. Each series uses its own axis.
+
+![Monthly issue openings and human discussion](images/discussion_trend_chart.png)
 
 ## Data model
 
@@ -157,16 +149,19 @@ project-root/
 ├── example_analysis.py            # Starter example
 ├── issue_analysis_utils.py        # Shared analysis helpers
 ├── label_resolution_analysis.py   # Feature 1
+├── discussion_trend_analysis.py   # Feature 3
 ├── requirements.txt               # Python dependencies
 ├── README.md
 ├── poetry_issues.json             # Local dataset; usually not committed
 └── tests/
-    └── test_label_resolution_analysis.py
+    ├── test_label_resolution_analysis.py
+    └── test_discussion_trend_analysis.py
 └── images/
-    └── label_resolution_chart.png    
+    ├── label_resolution_chart.png
+    └── discussion_trend_chart.png
 ```
 
-Additional Feature 2/3 modules and tests should be added to this structure when merged. This tree shows the confirmed Feature 1 files, not a complete inventory of the team's final repository.
+The Feature 2 module should be added to this structure when it is merged.
 
 ## Testing
 
@@ -213,6 +208,7 @@ Stage only files that exist and belong to your change. Do not commit `.venv/`, c
 - An issue can have multiple labels, so label-group counts should not be summed to estimate unique issues.
 - Closed issues lacking a valid recorded closure event cannot be assigned a reliable resolution duration using this method.
 - Correlation between discussion activity and resolution time does not establish causation.
+- Feature 3 excludes bot comments. Comments are dated by the comment event, so a busy comment month is not necessarily a month when many new issues were opened.
 
 ## Team Contributions
 
@@ -220,37 +216,7 @@ Stage only files that exist and belong to your change. Do not commit `.venv/`, c
 |---|---|---|
 | Feature 1 | Label Resolution Time Analysis | Bala Govindaraju |
 | Feature 2 | Contributors Dashboard | Jael Andre |
-| Feature 3 | Priority & Complexity Prediction | Bhargav Nallamothu |
-
-
-## Feature 3: Priority & Complexity Prediction — Example Output and Use Cases
-
-The following example illustrates the proposed JSON output format for the priority and complexity prediction feature. The values are illustrative and should be verified against the implemented feature before submission.
-
-### JSON Output Format
-
-```json
-{
-  "predicted_priority": "Medium",
-  "priority_confidence": 89.0,
-  "complexity_score": 75,
-  "number": 9780,
-  "title": "Issue title...",
-  "url": "https://github.com/python-poetry/poetry/issues/9780",
-  "labels": ["kind/bug", "status/triage"],
-  "num_comments": 1
-}
-```
-
-### Use Cases
-
-1. **Triage Automation:** Quickly identify which issues need immediate attention.
-2. **Resource Allocation:** Match developers to issues based on complexity.
-3. **Sprint Planning:** Balance high-priority items with complexity estimates.
-4. **Maintainer Insights:** Understand which types of issues are most urgent versus most complex.
-5. **Trend Analysis:** Track how priority and complexity correlate over time.
-
-*Note: These are intended use cases. The JSON structure, prediction confidence, and complexity score should be confirmed against Feature 3's actual implementation; they are not verified model results.*
+| Feature 3 | Discussion Trend Analysis | Bhargav Nallamothu |
 
 ## Project attribution
 

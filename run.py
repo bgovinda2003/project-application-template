@@ -11,6 +11,7 @@ import config
 from example_analysis import ExampleAnalysis
 from data_loader import DataLoader
 from label_resolution_analysis import run as run_label_analysis
+from discussion_trend_analysis import run as run_discussion_analysis
 
 
 def parse_args():
@@ -55,6 +56,7 @@ elif args.feature == 1:
 elif args.feature == 2:
     pass # TODO call second analysis
 elif args.feature == 3:
-    pass # TODO call third analysis
+    issues = DataLoader().get_issues()
+    run_priority_analysis(issues, label=args.label)
 else:
     print('Need to specify which feature to run with --feature flag.')
