@@ -57,6 +57,6 @@ elif args.feature == 2:
     pass # TODO call second analysis
 elif args.feature == 3:
     issues = DataLoader().get_issues()
-    run_priority_analysis(issues, label=args.label)
+    run_discussion_analysis(issues, label=args.label)
 else:
     print('Need to specify which feature to run with --feature flag.')
