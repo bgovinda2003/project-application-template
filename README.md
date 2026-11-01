@@ -59,7 +59,7 @@ The provided model uses `python-dateutil` to parse dates; the analysis charts us
 
    ```json
    {
-     "ENPM611_PROJECT_DATA_PATH": "poetry_issues.json"
+     "ENPM611_PROJECT_DATA_PATH": "poetry_issues_all.json"
    }
    ```
 
@@ -89,7 +89,32 @@ python run.py --feature 1
 
 **Interpretation:** Median resolution time describes a typical closed issue, while the mean can be affected by unusually long-lived issues. Time to closure does not necessarily equal time to a confirmed fix. An issue with multiple labels can contribute to multiple label groups. Issues without usable closure timestamps are excluded.
 
+Feature 1: Label Resolution Time Analysis — Sample Results
+
+This feature analyzes how long GitHub issues take to resolve, grouped by issue labels. It calculates the average and median resolution times for closed issues.
+How to Run
+python run.py --feature 1 --label kind/bug
+Sample Analysis Results
+Metric	Result
+Label	kind/bug
+Number of closed issues	256
+Median resolution time	0.91 days
+Average resolution time	125.90 days
+
+Interpretation:
+
+The median resolution time of 0.91 days indicates that half of the analyzed closed bug issues were resolved within approximately 22 hours. The considerably higher average suggests that some issues remained open much longer, creating a right-skewed distribution.
+
+Resolution Time Visualization
+
+Figure 1: Comparison of median resolution times across GitHub issue labels.
+
+![Labe Resolution Time Chart](images/label_resolution_chart.png)
+
+Note: These results are from the previously analyzed dataset. 
+
 ### Feature 2 — Discussion Intensity vs. Resolution Time
+
 
 ```bash
 python run.py --feature 2
@@ -137,6 +162,8 @@ project-root/
 ├── poetry_issues.json             # Local dataset; usually not committed
 └── tests/
     └── test_label_resolution_analysis.py
+└── images/
+    └── label_resolution_chart.png    
 ```
 
 Additional Feature 2/3 modules and tests should be added to this structure when merged. This tree shows the confirmed Feature 1 files, not a complete inventory of the team's final repository.
@@ -195,7 +222,6 @@ Stage only files that exist and belong to your change. Do not commit `.venv/`, c
 | Feature 2 | Contributors Dashboard | Jael Andre |
 | Feature 3 | Priority & Complexity Prediction | Bhargav Nallamothu |
 
-*Replace the example names with the actual team members before submission. Confirm the feature descriptions and example output with the team before submission.*
 
 ## Feature 3: Priority & Complexity Prediction — Example Output and Use Cases
 
