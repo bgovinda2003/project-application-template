@@ -76,14 +76,20 @@ python run.py --feature 1
 Feature 1: Label Resolution Time Analysis — Sample Results
 
 This feature analyzes how long GitHub issues take to resolve, grouped by issue labels. It calculates the average and median resolution times for closed issues.
+
 How to Run
+
 python run.py --feature 1 --label kind/bug
-Sample Analysis Results
-Metric	Result
-Label	kind/bug
-Number of closed issues	256
-Median resolution time	0.91 days
-Average resolution time	125.90 days
+
+#### Sample Analysis Results
+
+| Metric | Result |
+|---|---:|
+| Issue label | `kind/bug` |
+| Number of closed issues | 256 |
+| Median resolution time | 0.91 days |
+| Average resolution time | 125.90 days |
+
 
 Interpretation:
 
