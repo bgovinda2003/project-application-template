@@ -11,7 +11,9 @@ import config
 from example_analysis import ExampleAnalysis
 from data_loader import DataLoader
 from label_resolution_analysis import run as run_label_analysis
+from contributor_activity_analysis import run as run_contributor_activity
 from discussion_trend_analysis import run as run_discussion_analysis
+
 
 
 def parse_args():
@@ -54,7 +56,8 @@ elif args.feature == 1:
     issues = DataLoader().get_issues()
     run_label_analysis(issues,label=args.label)
 elif args.feature == 2:
-    pass # TODO call second analysis
+    issues = DataLoader().get_issues()
+    run_contributor_activity(issues)
 elif args.feature == 3:
     issues = DataLoader().get_issues()
     run_discussion_analysis(issues, label=args.label)
