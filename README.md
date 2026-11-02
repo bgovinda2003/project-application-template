@@ -20,7 +20,7 @@ The analyses are intended to produce interpretable findings, not just raw counts
 
 * Python 3.10 or newer (recommended)
 * Dependencies listed in `requirements.txt`
-* A local copy of the prepared `poetry\_issues.json` dataset
+* A local copy of the prepared `poetry_issues.json` dataset
 
 The provided model uses `python-dateutil` to parse dates; the analysis charts use `matplotlib`. Install dependencies from the repository's requirements file and ensure those packages are included.
 
@@ -29,8 +29,8 @@ The provided model uses `python-dateutil` to parse dates; the analysis charts us
 1. Clone the **team's fork** and open the project folder:
 
 ```bash
-      git clone <TEAM\_REPOSITORY\_URL>
-      cd <REPOSITORY\_FOLDER>
+      git clone <TEAM_REPOSITORY_URL>
+      cd <REPOSITORY_FOLDER>
    ```
 
 2. Create and activate a virtual environment.
@@ -68,11 +68,11 @@ Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 
 ```json
       {
-        "ENPM611\_PROJECT\_DATA\_PATH": "poetry\_issues\_all.json"
+        "ENPM611_PROJECT_DATA_PATH": "poetry_issues_all.json"
       }
    ```
 
-   Only one dataset path is active at a time. To use `poetry\_issues\_all.json` instead, change the configuration value to that filename and ensure the file exists locally.
+   Only one dataset path is active at a time. To use `poetry_issues_all.json` instead, change the configuration value to that filename and ensure the file exists locally.
 
 ## Run the analyses
 
@@ -92,7 +92,7 @@ To display the top labels without selecting one:
 python run.py --feature 1
 ```
 
-**Method:** The analysis loads issue objects, identifies closed issues with usable dates, computes the elapsed time between `created\_date` and the latest recorded `closed` event, groups results by label, and reports the count, mean, and median resolution time. A matplotlib bar chart compares median resolution times for the ten most frequent labels among the analyzed closed issues.
+**Method:** The analysis loads issue objects, identifies closed issues with usable dates, computes the elapsed time between `created_date` and the latest recorded `closed` event, groups results by label, and reports the count, mean, and median resolution time. A matplotlib bar chart compares median resolution times for the ten most frequent labels among the analyzed closed issues.
 
 **Interpretation:** Median resolution time describes a typical closed issue, while the mean can be affected by unusually long-lived issues. Time to closure does not necessarily equal time to a confirmed fix. An issue with multiple labels can contribute to multiple label groups. Issues without usable closure timestamps are excluded.
 
@@ -123,7 +123,7 @@ Resolution Time Visualization
 
 Figure 1: Comparison of median resolution times across GitHub issue labels.
 
-!\[Labe Resolution Time Chart](images/label\_resolution\_chart.png)
+![Label Resolution Time Chart](images/label_resolution_chart.png)
 
 Note: These results are from the previously analyzed dataset.
 
@@ -166,28 +166,28 @@ python run.py --feature 3 --label kind/bug
 
 **Question:** Has discussion on Poetry issues grown, shrunk, or stayed flat over time?
 
-**Method:** Issues are counted in the month of `created\_date`. Human `commented` events are counted in the month of `event\_date`. Bot accounts are ignored. `comments\_per\_issue` divides a month's human comments by the number of issues opened that month. A comment can belong to an older issue, so that ratio compares volume. It does not mean the comments were written on the issues opened that month. The optional `--label` argument limits both counts to issues carrying that label.
+**Method:** Issues are counted in the month of `created_date`. Human `commented` events are counted in the month of `event_date`. Bot accounts are ignored. `comments_per_issue` divides a month's human comments by the number of issues opened that month. A comment can belong to an older issue, so that ratio compares volume. It does not mean the comments were written on the issues opened that month. The optional `--label` argument limits both counts to issues carrying that label.
 
 **Output:** A comparison of the earlier half of the timeline with the later half, the five months with the most human comments, and a two-line chart of issues opened and human comments.
 
-On `poetry\_issues\_all.json`, February 2018 through May 2021 had 2,686 issues opened and 3.89 human comments per issue opened. June 2021 through October 2024 had 2,887 issues opened and 4.77 human comments per issue opened. The busiest comment month was September 2022, with 920 human comments.
+On `poetry_issues_all.json`, February 2018 through May 2021 had 2,686 issues opened and 3.89 human comments per issue opened. June 2021 through October 2024 had 2,887 issues opened and 4.77 human comments per issue opened. The busiest comment month was September 2022, with 920 human comments.
 
 Figure 3: Monthly issue openings and human comments. Each series uses its own axis.
 
-!\[Monthly issue openings and human discussion](images/discussion\_trend\_chart.png)
+![Monthly issue openings and human discussion](images/discussion_trend_chart.png)
 
 ## Data model
 
 The starter application reads JSON records and converts them into `Issue` and `Event` objects:
 
-* `Issue.created\_date`: issue creation timestamp
+* `Issue.created_date`: issue creation timestamp
 * `Issue.state`: open or closed status
 * `Issue.labels`: list of label names
 * `Issue.events`: timeline events, including `closed`, `labeled`, and `commented`
-* `Event.event\_date`: timestamp for the event
-* `Event.event\_type`: type of timeline event
+* `Event.event_date`: timestamp for the event
+* `Event.event_type`: type of timeline event
 
-For Feature 1, the closure timestamp comes from a `closed` event, **not** from `updated\_date`. Updating an issue after closure does not change its resolution time.
+For Feature 1, the closure timestamp comes from a `closed` event, **not** from `updated_date`. Updating an issue after closure does not change its resolution time.
 
 ## Project structure
 
@@ -196,24 +196,24 @@ project-root/
 ├── run.py                         # CLI entry point and feature dispatch
 ├── config.py                      # Configuration reader
 ├── config.json                    # Active dataset path
-├── data\_loader.py                 # Loads JSON as Issue objects
+├── data_loader.py                 # Loads JSON as Issue objects
 ├── model.py                       # Issue and Event models
-├── example\_analysis.py            # Starter example
-├── issue\_analysis\_utils.py        # Shared analysis helpers
-├── label\_resolution\_analysis.py   # Feature 1
+├── example_analysis.py            # Starter example
+├── issue_analysis_utils.py        # Shared analysis helpers
+├── label_resolution_analysis.py   # Feature 1
 ├── contributor_activity_analysis.py # Feature 2
-├── discussion\_trend\_analysis.py   # Feature 3
+├── discussion_trend_analysis.py   # Feature 3
 ├── requirements.txt               # Python dependencies
 ├── README.md
-├── poetry\_issues.json             # Local dataset; usually not committed
+├── poetry_issues.json             # Local dataset; usually not committed
 └── tests/
-    ├── test\_label\_resolution\_analysis.py
+    ├── test_label_resolution_analysis.py
     ├── test_contributor_activity_analysis.py
-    └── test\_discussion\_trend\_analysis.py
+    └── test_discussion_trend_analysis.py
 └── images/
-    ├── label\_resolution\_chart.png
+    ├── label_resolution_chart.png
     ├── contributor_activity_chart.png
-    └── discussion\_trend\_chart.png
+    └── discussion_trend_chart.png
 ```
 
 The Feature 2 module and its tests are implemented on `feature/contributor-activity-analysis` and should be merged into `main` after review.
@@ -244,7 +244,7 @@ Example workflow for Feature 1:
 ```bash
 git checkout feature/label-resolution-analysis
 git status
-git add README.md run.py config.json issue\_analysis\_utils.py label\_resolution\_analysis.py tests/test\_label\_resolution\_analysis.py
+git add README.md run.py config.json issue_analysis_utils.py label_resolution_analysis.py tests/test_label_resolution_analysis.py
 git commit -m "Document and implement label resolution analysis"
 git push -u origin feature/label-resolution-analysis
 ```
